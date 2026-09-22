@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+desktop.ini
+.idea/
+
+OpenSLT/.runtime_cache/
+OpenSLT/db.sqlite3
+OpenSLT/media/
+OpenSLT/staticfiles/
+OpenSLT/tmp/
