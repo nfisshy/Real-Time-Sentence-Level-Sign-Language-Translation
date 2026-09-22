@@ -67,7 +67,6 @@ SHuBERT's contextual output is linearly projected into ByT5's hidden space, and 
 | Loss | Cross-entropy with label smoothing |
 | Decoding | Beam width 2 |
 
-**SHuBERT is kept fully frozen.** It was pretrained on ~1,000 hours of ASL video; the fine-tuning corpus here is ~9.8K sentences. Unfreezing 86M parameters against a dataset three orders of magnitude smaller than pretraining risks catastrophically overwriting the pretrained sign representation. Only the task-specific decoder head and the small cross-modal adapter are updated.
 ---
 
 ## 4. Data
@@ -100,7 +99,7 @@ This layer is not part of SHuBERT's reference implementation; it is the system-e
 | Reorder buffer | Chunks completed out of order (due to parallel workers) are held until temporal order can be restored before being passed downstream |
 | Safe shutdown | On stop, in-flight chunks are allowed to finish processing before the session closes, preventing the last sentence from being silently dropped |
 
-**Parallelizing the three MediaPipe branches** cuts per-frame landmark extraction from 107–111 ms to 45–48 ms (~2.3×). Running the branches sequentially, wall-clock time is the *sum* of the three; running them concurrently, it is bounded by the *slowest* branch — this is a scheduling change, not a reduction in input resolution, frame rate, or perception streams.
+Parallelizing the three MediaPipe branches cuts per-frame landmark extraction from 107–111 ms to 45–48 ms (~2.3×). Running the branches sequentially, wall-clock time is the *sum* of the three; running them concurrently, it is bounded by the *slowest* branch — this is a scheduling change, not a reduction in input resolution, frame rate, or perception streams.
 
 ### 5.2. Endpoint Detection (Sentence Boundary State Machine)
 
